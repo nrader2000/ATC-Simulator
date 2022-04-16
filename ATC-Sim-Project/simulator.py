@@ -9,8 +9,33 @@
 # necessary commands to be able to direct and control each of the simulated planes 
 # around the airport. Just as any Air Traffic Controller would be able to do. 
 
+# Imported Packages
+import tkinter as tk
 # GUI
 
+# window creation
+window = tk.Tk()
+window.minsize(800,600)
+
+#frame cration 
+left_frame = tk.Frame()
+right_frame = tk.Frame()
+
+# textbox creation
+textbox = tk.Text(master=left_frame)
+textbox.pack()
+
+# entrybox creation
+entry = tk.Entry(master=left_frame)
+entry.pack()
+
+# heading list creation
+ 
+
+# execution of window
+left_frame.pack(side=tk.LEFT)
+right_frame.pack(side=tk.RIGHT)
+tk.mainloop()
 # Simulator Class
 
 # Weather Class
