@@ -1,24 +1,6 @@
-# simulator.py
-# Nick Rader, Joe Davidson, Declan Worley, Sarah McLellan, Connor Willians, Cameron Meadows
-# CSC-4710
-# The product we were assigned with developing is an Air Traffic Control 
-# Simulator, based on the atc-sim.com web app. This should be able to simulate 
-# planes approaching and taking off from the STL (St. Louis Lambert) airport, 
-# as well as planes passing through the area. The product should also give the 
-# user the ability to act as an air traffic controller by giving the user the 
-# necessary commands to be able to direct and control each of the simulated planes 
-# around the airport. Just as any Air Traffic Controller would be able to do. 
+from tkinter import *
+import random 
 
-# Imported Packages
-import tkinter as tk
-import random
-from collections import namedtuple
-import time
-
-#GUI - Nick + Declan
-
-
-# Weather Function - Sarah
 def weather():
     array = []
     x = random.randint(1,99)
@@ -71,7 +53,6 @@ def runway(arrivalstatus,windDirection):
             runway = random.choice(runways)
             return runway
 
-# Arriving Aircraft Class - Nick
 class Arriving_Aircraft:
     name = 0
     # list of the current aircrafts
@@ -99,10 +80,9 @@ class Arriving_Aircraft:
             "status": status,
         }
         self.current_aircraft_list.append(new_aircraft)
-        print(new_aircraft) #gui printout of aircraft
-        
+        #print(new_aircraft) #gui printout of aircraft
+        return new_aircraft
 
-# Departing Aircraft Class -  Nick
 class Departing_Aircraft:
     name = 0
     # list of the current aircrafts
@@ -137,38 +117,38 @@ class Departing_Aircraft:
             "To": nav,
         }
         self.current_aircraft_list.append(new_aircraft)
-        #print(new_aircraft) #gui printout of aircraft
+        #print(new_aircraft)
+        return new_aircraft
 
-# Altitude Function - Joe
+class Test:
 
-# Station Class - Cam
+    index = 0
+    def __init__(self, tk):
+        self.listbox = Listbox(tk,selectmode=SINGLE,bg='#0d212e',fg='#ffffff')
+        self.listbox.place(relwidth=0.7,relheight=0.5,relx=0.1,rely=0.1)
 
-# Takeoff Function - Cam
+    def addItem(self,ac):
+        print(ac)
+        self.listbox.insert(Test.index,ac)
+        Test.index = Test.index + 1
+        print(self.listbox.size())
 
-# Landing Function - Cam
+def task():
+    tt = Test(tk)
+    aircraftchoice = random.randint(0,1)
+    if(aircraftchoice == 0):
+        newaircraft = Arriving_Aircraft('newaircraft')
+        newaircraft = newaircraft.spawn_aircraft()
+        tt.addItem(newaircraft)
+    else:
+        newaircraft = Departing_Aircraft('newaircraft')
+        newaircraft = newaircraft.spawn_aircraft()
+        tt.addItem(newaircraft)
+    tk.after(2000,task)
 
-# Degree Function - ??
-
-# Scale Function - Sarah
-
-# Speed Function - Joe
-
-# Abort Landing Function - Connor
-
-# Abort Takeoff Function - Connor
-
-# Simulator Class - Joe + Declan + Nick
-class Simulator:
-    running = 1
-    while(running):
-        aircraftchoice = random.randint(0,1)
-        if(aircraftchoice == 0):
-            newaircraft = Arriving_Aircraft('newaircraft')
-            newaircraft.spawn_aircraft()
-        else:
-            newaircraft = Departing_Aircraft('newaircraft')
-            newaircraft.spawn_aircraft()
-        time.sleep(5)
-
-# Run the Simulator
-main = Simulator('main')
+tk = Tk()
+tk.title("test")
+tk['background'] = '#183d54'
+tk.geometry("600x500")
+tk.after(5000,task)
+tk.mainloop()
