@@ -155,7 +155,33 @@ class Departing_Aircraft:
 
 # Abort Landing Function - Connor
 
+#function to abort landing, print msg, and cancel clearance
+def abort_Landing(flightid):
+    #print error message to GUI
+    print("Error - Must Abort Landing.")
+    
+    #call cancel clearance with flightID 
+    #UNKNOWN HOW TO DO RN
+    cancel_Clearance(flightid)
+    
 # Abort Takeoff Function - Connor
+
+#function to abort takeoff, print msg, call runway, and cancel clearance
+def abort_Takeoff(flightid):
+    #print error message to GUI
+    print("Error - Must Abort Takeoff.")
+    
+    #call cancel clearance with flightID 
+    #UNKNOWN HOW TO DO RN
+    cancel_Clearance(flightid)
+    
+    #call runway class
+    #NOT SURE WHY ATM, DONT THINK NEEDED
+    runway(0,0)
+    
+    #remove progress strip
+    #??? send something to GUI
+    
 
 # Simulator Class - Joe + Declan + Nick
 class Simulator:
