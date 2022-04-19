@@ -3,11 +3,11 @@
 
  ## Software Developers Involved: 
 
- - [Joe Davidson](https://www.linkedin.com/in/joseph-davidson-00/), 
- - [Sarah McLellan](https://www.linkedin.com/in/sarah-mclellan/), 
- - [Nick Rader](https://www.linkedin.com/in/nicholas-rader/), 
- - [Declan Worley](), 
- - [Connor Willans](), 
+ - [Joe Davidson](https://www.linkedin.com/in/joseph-davidson-00/)
+ - [Sarah McLellan](https://www.linkedin.com/in/sarah-mclellan/)
+ - [Nick Rader](https://www.linkedin.com/in/nicholas-rader/)
+ - [Declan Worley]()
+ - [Connor Willans]() 
  - [Cameron Meadows](https://github.com/CameronMeadows)
 
  ## Software Product: 
