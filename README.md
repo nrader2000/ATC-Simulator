@@ -6,8 +6,8 @@
  - [Joe Davidson](https://www.linkedin.com/in/joseph-davidson-00/)
  - [Sarah McLellan](https://www.linkedin.com/in/sarah-mclellan/)
  - [Nick Rader](https://www.linkedin.com/in/nicholas-rader/)
- - [Declan Worley]()
- - [Connor Willans]() 
+ - [Declan Worley](https://www.linkedin.com/in/declanworley/)
+ - [Connor Willans](https://github.com/ConnorWillans) 
  - [Cameron Meadows](https://github.com/CameronMeadows)
 
  ## Software Product: 
