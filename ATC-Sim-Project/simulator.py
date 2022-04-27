@@ -445,6 +445,7 @@ class Backend_Simulator:
         for i in self.current_aircraft_list:
             if i["FlightID"] == flightID:
                 i['speed'] = 0
+                console_printer.insert(END,"Holding Aircraft: " + flightID)
     
     # departure_cleared Function - Joe 
     def departure_cleared(self):
@@ -516,7 +517,7 @@ def simulator(command):
         main.print_aircraft(0)
     # checking to see if the user requested an aircratf hold
     elif command.split()[1].lower() == "h":
-        console_printer.insert(END,"Holding Aircraft")
+        main.hold_aircraft(command.split()[0])
     # checks for a valid flightID from the console
     elif command.split()[0] in main.get_flight_ids() and len(command.split()) > 2:
         
