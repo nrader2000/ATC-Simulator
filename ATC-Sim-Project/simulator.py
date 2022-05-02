@@ -313,6 +313,8 @@ class Backend_Simulator:
         hwtext.insert(INSERT,"'showac' = shows the current aircrafts in the airspace and their values. \n")
         hwtext.insert(INSERT,"'s' = changes the speed for an indicated aircraft(using FlightID). Must follow up the command with a valid number. Ex: <FlightID> s 500 \n")
         hwtext.insert(INSERT,"'h' = holds an indicated aircraft(using FlightID). Ex: <FlightID> h \n")
+        hwtext.insert(INSERT,"'t' = clears an indicated aircraft for takeoff(using FlightID), as long as it's indicated destination is a navaid and not STL(Arrival). Ex: <FlightID> t \n")
+        hwtext.insert(INSERT,"'l' = clears an indicated aircraft for landing(using FlightID), as long as it's indicated destination is STL(Arrival) and not a navaid. Ex: <FlightID> l \n")
         hwtext.insert(INSERT,"'c(l,r,navaid,#)' = changes the heading an indicated aircraft(using FlightID). Must follow up the command with either an 'l', 'r', navaid name, or valid heading number to represent the heading in degress.\nEx: <FlightID> c l, <FlightID> c r, <FlightID> c SKYPE, <FlightID> c 180 \n")
         hwtext.insert(INSERT,"'c(a)' = changes the altitude an indicated aircraft(using FlightID). Must be followed up with a value between 3 and 36(the value gets multiplied by 1000 to depict legitimate altitude). Ex: <FlightID> c a 4 \n")
         hwtext.configure(bg='#183d54',fg='#ffffff',font=("Arial 16"),bd=0,state='disabled',padx=10,pady=10,wrap=WORD)
@@ -352,7 +354,7 @@ class Backend_Simulator:
                     i["speed"] = speed
                     console_printer.insert(END,i["FlightID"]+": new speed is: "+i["speed"])
         else:
-            console_printer.insert(END,"Invalid speed change")
+            console_printer.insert(END,"Invalid speed change, consult help page")
 
     # changes the heading of an aircraft, to the parameter "heading" degrees
     def change_heading(self, flightid, heading):
@@ -447,13 +449,24 @@ class Backend_Simulator:
                 i['speed'] = 0
                 console_printer.insert(END,"Holding Aircraft: " + flightID)
     
-    # departure_cleared Function - Joe 
-    def departure_cleared(self):
+    # departure_cleared Function - Joe + Nick 
+    def departure_cleared(self,flightID):
         for i in self.current_aircraft_list:
-            if i['destination'] != 'Arrival':
-                for j in self.destinations:
-                    if j['name'] == i['destination'] and abs(i['x_val']-j['x_val']) < 15 and abs(i['y_val']-j['y_val']) < 15:
-                        self.current_aircraft_list.remove(i)
+            if i["FlightID"] == flightID:
+                if i['destination'] != 'Arrival':
+                    console_printer.insert(END, flightID + " departure cleared, taking off now!")
+                else:
+                    console_printer.insert(END,"Error! " + flightID + " is currently in flight in the airspace. Consult the help page.")
+
+    # landing_cleared Function - Joe + Nick
+    def landing_cleared(self,flightID):
+        for i in self.current_aircraft_list:
+            if i["FlightID"] == flightID:
+                if i['destination'] == 'Arrival':
+                    console_printer.insert(END, flightID + " landing cleared, landing at STL now!")
+                else:
+                    console_printer.insert(END,"Error! " + flightID + " is currently not in flight in the airspace. Consult the help page.")
+
     
     # this is used once the termination of the program comes, we need to get rid of any concurrent processes - Joe
     def kill(self):
@@ -507,18 +520,28 @@ def simulator(command):
     #print("running simulator using " + command + "!") - debugging
     if command == '':
         pass
+    # q command = quit the program
     elif command.lower() == 'q':
         main.close_program()
+    # help command = open the help window
     elif command.lower() == 'help':
         main.help_window()
+    # about command = open the about window
     elif command.lower() == 'about':
         main.about_window()
+    # showac command = display all the aircrafts that are on the list
     elif command.lower() == "showac":
         main.print_aircraft(0)
     # checking to see if the user requested an aircratf hold
-    elif command.split()[1].lower() == "h":
+    elif command.split()[0] in main.get_flight_ids() and command.split()[1].lower() == "h":
         main.hold_aircraft(command.split()[0])
-    # checks for a valid flightID from the console
+    # checking to see if the user requested an aircratf to takeoff
+    elif command.split()[0] in main.get_flight_ids() and command.split()[1].lower() == "t":
+        main.departure_cleared(command.split()[0])
+    # checking to see if the user requested an aircratf to land
+    elif command.split()[0] in main.get_flight_ids() and command.split()[1].lower() == "l":
+        main.landing_cleared(command.split()[0])
+    # checks for a valid flightID from the console as well as any command with over 3 inputs in the console
     elif command.split()[0] in main.get_flight_ids() and len(command.split()) > 2:
         
         # checking to see if the user requested a change in speed
