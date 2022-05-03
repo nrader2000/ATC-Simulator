@@ -10,13 +10,13 @@
 # around the airport. Just as any Air Traffic Controller would be able to do.
 
 # Imports
-from operator import ne
+#from operator import ne
 from tkinter import *
 from tkinter.messagebox import askyesno
 import random
 import math
 from threading import Timer
-import time
+#import time
 
 # RepeatTimer Class - Joe
 class RepeatTimer(Timer):
